@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: basilisk
+  jpa:
+    database: POSTGRESQL
+    hibernate.ddl-auto: update
+    show-sql: true
+  datasource:
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:6000/basilisk
+    username: postgres
+    password: postgres
+
+
