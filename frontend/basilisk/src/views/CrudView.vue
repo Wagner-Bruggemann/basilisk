@@ -1,5 +1,5 @@
 <template>
-    <div class="card bg-white text-black">
+    <div class="bg-white text-black">
         Card
         <div class="flex">
             <div>
@@ -18,7 +18,7 @@
 
 <style lang="css">
 
-.card {
+/* .card {
     border: 2px black solid;
 }
 
@@ -32,6 +32,6 @@
 
 .flex {
     display: flex;
-}
+} */
 
 </style>
