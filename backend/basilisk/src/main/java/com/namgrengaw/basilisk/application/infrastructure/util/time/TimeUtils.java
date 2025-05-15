@@ -1,4 +1,4 @@
-package com.namgrengaw.basilisk.infrastructure.util.time;
+package com.namgrengaw.basilisk.application.infrastructure.util.time;
 
 public abstract class TimeUtils {
 

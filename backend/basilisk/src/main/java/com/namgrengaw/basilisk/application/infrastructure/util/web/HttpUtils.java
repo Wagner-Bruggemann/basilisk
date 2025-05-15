@@ -1,4 +1,4 @@
-package com.namgrengaw.basilisk.infrastructure.util.web;
+package com.namgrengaw.basilisk.application.infrastructure.util.web;
 
 import java.io.IOException;
 import java.net.URI;
@@ -26,7 +26,7 @@ public class HttpUtils {
         } catch (InterruptedException ex) {
             logger.error("The request has been interrupted!");
         }
-
+        return null;
     }
 
 }

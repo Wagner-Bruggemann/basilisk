@@ -1,10 +1,10 @@
-package com.namgrengaw.basilisk.infrastructure.components;
+package com.namgrengaw.basilisk.application.infrastructure.components;
 
-import com.namgrengaw.basilisk.infrastructure.exceptions.BusinessLogicException;
+import com.namgrengaw.basilisk.application.infrastructure.exceptions.BusinessLogicException;
 
 import java.util.UUID;
 
-import static com.namgrengaw.basilisk.infrastructure.validators.StringUtils.isBlank;
+import static com.namgrengaw.basilisk.application.infrastructure.validators.StringUtils.isBlank;
 
 public class Identifier {
 

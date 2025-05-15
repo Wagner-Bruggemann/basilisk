@@ -1,7 +1,6 @@
-package com.namgrengaw.basilisk.infrastructure.components;
+package com.namgrengaw.basilisk.application.infrastructure.components;
 
-import ch.qos.logback.core.util.StringUtil;
-import com.namgrengaw.basilisk.infrastructure.validators.StringUtils;
+import com.namgrengaw.basilisk.application.infrastructure.validators.StringUtils;
 
 import java.util.Objects;
 

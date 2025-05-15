@@ -1,4 +1,4 @@
-package com.namgrengaw.basilisk.infrastructure.dictionaries.enums;
+package com.namgrengaw.basilisk.application.infrastructure.dictionaries.enums;
 
 public enum Country {
     AFGHANISTAN,

@@ -1,3 +1,3 @@
-package com.namgrengaw.basilisk.infrastructure.dictionaries.contracts;
+package com.namgrengaw.basilisk.application.infrastructure.dictionaries.contracts;
 
 public interface State {}

@@ -1,6 +1,6 @@
-package com.namgrengaw.basilisk.infrastructure.dictionaries.enums;
+package com.namgrengaw.basilisk.application.infrastructure.dictionaries.enums;
 
-import com.namgrengaw.basilisk.infrastructure.dictionaries.contracts.State;
+import com.namgrengaw.basilisk.application.infrastructure.dictionaries.contracts.State;
 
 public enum BrasilianStates implements State {
     ACRE,

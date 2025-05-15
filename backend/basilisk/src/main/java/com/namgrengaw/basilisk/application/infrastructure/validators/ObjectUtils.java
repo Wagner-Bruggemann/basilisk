@@ -1,6 +1,6 @@
-package com.namgrengaw.basilisk.infrastructure.validators;
+package com.namgrengaw.basilisk.application.infrastructure.validators;
 
-import com.namgrengaw.basilisk.infrastructure.exceptions.BusinessLogicException;
+import com.namgrengaw.basilisk.application.infrastructure.exceptions.BusinessLogicException;
 
 import java.util.Objects;
 

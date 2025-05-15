@@ -1,6 +1,6 @@
-package com.namgrengaw.basilisk.infrastructure.components;
+package com.namgrengaw.basilisk.application.infrastructure.components;
 
-import static com.namgrengaw.basilisk.infrastructure.validators.ObjectUtils.evaluateNonNullObjects;
+import static com.namgrengaw.basilisk.application.infrastructure.validators.ObjectUtils.evaluateNonNullObjects;
 
 public class Image {
 

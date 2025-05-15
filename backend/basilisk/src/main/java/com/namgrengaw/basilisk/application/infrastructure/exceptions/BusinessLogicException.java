@@ -1,4 +1,4 @@
-package com.namgrengaw.basilisk.infrastructure.exceptions;
+package com.namgrengaw.basilisk.application.infrastructure.exceptions;
 
 public class BusinessLogicException extends RuntimeException {
     public BusinessLogicException(String message) {

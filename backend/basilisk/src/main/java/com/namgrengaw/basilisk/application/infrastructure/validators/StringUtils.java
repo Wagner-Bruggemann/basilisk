@@ -1,4 +1,4 @@
-package com.namgrengaw.basilisk.infrastructure.validators;
+package com.namgrengaw.basilisk.application.infrastructure.validators;
 
 import java.util.Objects;
 

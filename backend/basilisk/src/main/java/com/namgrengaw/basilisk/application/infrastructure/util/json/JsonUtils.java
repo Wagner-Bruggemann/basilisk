@@ -1,9 +1,8 @@
-package com.namgrengaw.basilisk.infrastructure.util.json;
+package com.namgrengaw.basilisk.application.infrastructure.util.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.namgrengaw.basilisk.infrastructure.exceptions.BusinessLogicException;
-import com.namgrengaw.basilisk.infrastructure.util.web.HttpUtils;
+import com.namgrengaw.basilisk.application.infrastructure.exceptions.BusinessLogicException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
