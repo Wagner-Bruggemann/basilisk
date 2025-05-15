@@ -1,21 +1,7 @@
-/* color palette from <https://github.com/vuejs/theme> */
-@import "tailwindcss";
-
-/* .color1 {color: #0092ff;}
-.color2 {color: #00c0ff;}
-.color3 {color: #00f1ff;}
-.color4 {color: #41ffff;}
-.color5 {color: #deffff;} */
-
-/* .color1 {color: #001224;}
-.color2 {color: #003b5d;}
-.color3 {color: #0070a4;}
-.color4 {color: #00b1f6;}
-.color5 {color: #00feff;} */
+@import 'tailwindcss';
 
 @layer base {
   :root {
-    
     --bg-primary: #deffff;
     --text-primary: #1f2937;
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -25,23 +11,10 @@
     --card-bg: #0092ff;
   }
 
-  [data-theme="dark"] {
-    
-    --bg-primary: #0f2544;
-    --text-primary: #f3f4f6;
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-    --input-border: #4b5563;
-    --button-bg: #60a5fa;
-    --button-bg-hover: #3b82f6;
-    --card-bg: #374151;
-  }
-
   body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
     transition:
-    color 0.5s,
-    background-color 0.5s;
+      color 0.5s,
+      background-color 0.5s;
     line-height: 1.6;
     font-family:
       Inter,
@@ -60,26 +33,5 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  .card-container {
-    background-color: var(--bg-primary);
-    box-shadow: var(--card-shadow);
-  }
-
-  .card-inner {
-    background-color: var(--card-bg);
-  }
-
-  input {
-    border-color: var(--input-border);
-  }
-
-  .btn {
-    background-color: var(--button-bg);
-  }
-
-  .btn:hover {
-    background-color: var(--button-bg-hover);
   }
 }

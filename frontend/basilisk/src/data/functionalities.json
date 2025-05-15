@@ -1,0 +1,22 @@
+{
+  "id": "asff-rfbe-ihnj",
+  "name": "Product",
+  "fields": [
+    {
+      "id": "klndvjk-bf-w513",
+      "name": "Code",
+      "type": "string"
+    },
+    {
+      "id": "olansdv-aqwf-8d513",
+      "name": "Name",
+      "type": "string"
+    },
+    {
+      "id": "olandvs-aqwf-8d513",
+      "name": "Description",
+      "type": "string",
+      "variant": "textarea"
+    }
+  ]
+}
