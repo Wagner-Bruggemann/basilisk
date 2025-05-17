@@ -1,12 +1,10 @@
-export interface Functionality {
-  id: string
-  name: string
-  fields: Field[]
-}
+import type Field from '@/domain/infrastructure/Field'
+import type { Operation } from './Operation'
 
-export interface Field {
+export default interface Functionality {
   id: string
   name: string
-  type: string
-  variant: string
+  label: string
+  fields: Field[]
+  operations: Operation[]
 }
