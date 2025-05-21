@@ -11,5 +11,9 @@ spring:
     url: jdbc:postgresql://localhost:6000/basilisk
     username: postgres
     password: postgres
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
 
 

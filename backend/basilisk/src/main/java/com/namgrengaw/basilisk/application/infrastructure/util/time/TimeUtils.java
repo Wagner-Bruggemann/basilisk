@@ -1,5 +1,7 @@
 package com.namgrengaw.basilisk.application.infrastructure.util.time;
 
+import java.time.LocalDateTime;
+
 public abstract class TimeUtils {
 
     public static String formatedDate(long interval) {
@@ -16,6 +18,10 @@ public abstract class TimeUtils {
 
     public static int inSeconds(long interval) {
         return (int) interval % 60;
+    }
+
+    public static LocalDateTime getActualTimestamp() {
+        return LocalDateTime.now();
     }
 
 }
