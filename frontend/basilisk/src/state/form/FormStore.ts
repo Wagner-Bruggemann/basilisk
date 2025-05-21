@@ -3,6 +3,8 @@ import { Operation } from '@/domain/infrastructure/Operation';
 
 import { ref } from 'vue';
 import { defineStore } from "pinia";
+import { FieldType } from '@/domain/infrastructure/FieldType';
+import { FieldVariant } from '@/domain/infrastructure/FieldVariant';
 
 export const useFormStore = defineStore('formStore', () => {
 
@@ -24,24 +26,24 @@ export const useFormStore = defineStore('formStore', () => {
                     id: "fb6b51efb-54ebf64be-ebft65141",
                     name: "id",
                     label: "Identificador",
-                    type: "string",
-                    variant: null,
+                    type: FieldType.Text,
+                    variant: FieldVariant.Default,
                     readonly: true
                 },
                 {
                     id: "fb6vvsefb-54ebf6wge-ebft65141",
                     name: "name",
                     label: "Nome",
-                    type: "string",
-                    variant: null,
+                    type: FieldType.Text,
+                    variant: FieldVariant.Default,
                     readonly: false
                 },
                 {
                     id: "rbv6b51efb-54eb23454be-ebft65141",
                     name: "description",
                     label: "Descrição",
-                    type: "string",
-                    variant: "text-area",
+                    type: FieldType.Text,
+                    variant: FieldVariant.TextArea,
                     readonly: false
                 }
             ]

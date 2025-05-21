@@ -1,16 +1,6 @@
 @import 'tailwindcss';
 
 @layer base {
-  :root {
-    --bg-primary: #deffff;
-    --text-primary: #1f2937;
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --input-border: #41ffff;
-    --button-bg: #00f1ff;
-    --button-bg-hover: #00c0ff;
-    --card-bg: #0092ff;
-  }
-
   body {
     transition:
       color 0.5s,

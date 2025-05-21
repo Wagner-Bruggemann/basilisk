@@ -11,6 +11,10 @@ import Aura from '@primeuix/themes/aura'
 const primeVueTheme = {
   theme: {
     preset: Aura,
+    options: {
+      darkModeSelector: 'none',
+      cssLayer: false,
+    }
   },
 }
 
