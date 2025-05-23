@@ -31,12 +31,12 @@ public class ProductInputMapper implements DtoMapper<Product, ProductDto> {
 
     @Override
     public Product toDomain(ProductDto productDto) {
-        this.name = new Name(productDto.name());
-        this.status = new Status(productDto.status());
+        this.name = new Name(productDto.getName());
+        this.status = new Status(productDto.getStatus());
         Product product = new Product(this.name, this.status);
 
-        final boolean isIdentifierAvailable = nonNull(productDto.id());
-        final boolean isDescriptionAvailable = nonNull(productDto.description());
+        final boolean isIdentifierAvailable = nonNull(productDto.getId());
+        final boolean isDescriptionAvailable = nonNull(productDto.getDescription());
         final boolean isIdentifierAndDescriptionAvailable = isIdentifierAvailable && isDescriptionAvailable;
 
         if(isIdentifierAvailable) product = createProductWithoutDescription(productDto);
@@ -49,18 +49,18 @@ public class ProductInputMapper implements DtoMapper<Product, ProductDto> {
     }
 
     private Product createProductWithGeneratedId(ProductDto productDto) {
-        this.description = new Description(productDto.description());
+        this.description = new Description(productDto.getDescription());
         return new Product(this.name, this.description, this.status);
     }
 
     private Product createProductWithoutDescription(ProductDto productDto) {
-        this.id = new Identifier(productDto.id());
+        this.id = new Identifier(productDto.getId());
         return new Product(this.id, this.name, this.status);
     }
 
     private Product createProductWithAllFields(ProductDto productDto) {
-        this.id = new Identifier(productDto.id());
-        this.description = new Description(productDto.description());
+        this.id = new Identifier(productDto.getId());
+        this.description = new Description(productDto.getDescription());
         return new Product(this.id, this.name, this.description, this.status);
     }
 
