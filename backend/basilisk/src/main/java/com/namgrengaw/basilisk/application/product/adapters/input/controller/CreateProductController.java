@@ -48,8 +48,11 @@ public class CreateProductController {
     }
 
     private static void configureHateaos(ProductDto persistedDto) {
-        BasicHateaosSetupLinks.setupGetAll(persistedDto);
+//        BasicHateaosSetupLinks.setupGetAll(persistedDto);
         BasicHateaosSetupLinks.setupGetById(persistedDto);
+        BasicHateaosSetupLinks.setupGetByName(persistedDto);
+        BasicHateaosSetupLinks.setupGetByDescription(persistedDto);
+        BasicHateaosSetupLinks.setupGetByStatus(persistedDto);
         BasicHateaosSetupLinks.setupUpdate(persistedDto);
         BasicHateaosSetupLinks.setupDelete(persistedDto);
 

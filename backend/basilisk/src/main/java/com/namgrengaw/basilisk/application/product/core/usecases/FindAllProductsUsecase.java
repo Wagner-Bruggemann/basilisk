@@ -1,10 +1,10 @@
 package com.namgrengaw.basilisk.application.product.core.usecases;
 
+import com.namgrengaw.basilisk.application.infrastructure.components.pagination.PaginatedResponse;
+import com.namgrengaw.basilisk.application.infrastructure.components.pagination.PaginationRequest;
 import com.namgrengaw.basilisk.application.product.core.domain.Product;
 import com.namgrengaw.basilisk.application.product.core.ports.input.FindAllProductsInputGateway;
 import com.namgrengaw.basilisk.application.product.core.ports.output.FindAllProductsOutputGateway;
-
-import java.util.List;
 
 public class FindAllProductsUsecase implements FindAllProductsInputGateway {
 
@@ -15,7 +15,7 @@ public class FindAllProductsUsecase implements FindAllProductsInputGateway {
     }
 
     @Override
-    public List<Product> findAllProducts() {
-        return this.findAllProductsOutputGateway.findAllProducts();
+    public PaginatedResponse<Product> findAllProducts(PaginationRequest paginationRequest) {
+        return this.findAllProductsOutputGateway.findAllProducts(paginationRequest);
     }
 }

@@ -1,10 +1,12 @@
 package com.namgrengaw.basilisk.application.product.adapters.input.controller;
 
+import com.namgrengaw.basilisk.application.infrastructure.components.Name;
 import com.namgrengaw.basilisk.application.infrastructure.mappers.DtoMapper;
 import com.namgrengaw.basilisk.application.product.adapters.input.dto.ProductDto;
 import com.namgrengaw.basilisk.application.product.adapters.input.hateaos.BasicHateaosSetupLinks;
 import com.namgrengaw.basilisk.application.product.core.domain.Product;
 import com.namgrengaw.basilisk.application.product.core.ports.input.GetProductByIdInputGateway;
+import com.namgrengaw.basilisk.application.product.core.ports.input.GetProductsByNameInputGateway;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,43 +17,48 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/catalog/product")
 @Tag(name = "Catalog", description = "Catalog operations")
-public class GetProductByIdController {
+public class GetProductByNameController {
 
-    private final GetProductByIdInputGateway getProductByIdInputGateway;
+    private final GetProductsByNameInputGateway getProductsByNameInputGateway;
     private final DtoMapper<Product, ProductDto> productMapper;
 
-    public GetProductByIdController(
-            final GetProductByIdInputGateway getProductByIdInputGateway,
+    public GetProductByNameController(
+            final GetProductsByNameInputGateway getProductsByNameInputGateway,
             final DtoMapper<Product, ProductDto> productMapper
     ) {
-        this.getProductByIdInputGateway = getProductByIdInputGateway;
+        this.getProductsByNameInputGateway = getProductsByNameInputGateway;
         this.productMapper = productMapper;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/with-name/{name}")
     @Operation(
-            summary = "Get by ID",
-            description = "Find a product by it's identifier",
+            summary = "Get by Name",
+            description = "Find all products by it's like name",
             responses = {
-                @ApiResponse(responseCode = "200", description = "Product found"),
-                @ApiResponse(responseCode = "404", description = "Product not found")
+                @ApiResponse(responseCode = "200", description = "Products found"),
+                @ApiResponse(responseCode = "404", description = "Products not found")
             }
     )
-    public ResponseEntity<ProductDto> getProductById(@PathVariable final String id) {
-        final Product foundProduct = getProductByIdInputGateway.getProductById(id);
-        final ProductDto productDto = productMapper.toDto(foundProduct);
+    public ResponseEntity<List<ProductDto>> getProductByName(@PathVariable final String name) {
+        final Name productName = new Name(name);
+        final List<Product> foundProducts = getProductsByNameInputGateway.getProductsByName(productName);
+        final List<ProductDto> foundDtos = foundProducts.stream()
+                .map(productMapper::toDto)
+                .toList();
 
-        configureHateaos(productDto);
+        foundDtos.forEach(GetProductByNameController::configureHateaos);
 
-        return ResponseEntity.ok(productDto);
+        return ResponseEntity.ok(foundDtos);
     }
 
     private static void configureHateaos(ProductDto productDto) {
 //        BasicHateaosSetupLinks.setupGetAll(productDto);
-        BasicHateaosSetupLinks.setupGetByName(productDto);
+        BasicHateaosSetupLinks.setupGetById(productDto);
         BasicHateaosSetupLinks.setupGetByDescription(productDto);
         BasicHateaosSetupLinks.setupGetByStatus(productDto);
         BasicHateaosSetupLinks.setupCreate(productDto);
@@ -59,8 +66,8 @@ public class GetProductByIdController {
         BasicHateaosSetupLinks.setupDelete(productDto);
 
         productDto.add(WebMvcLinkBuilder.linkTo(
-                WebMvcLinkBuilder.methodOn(GetProductByIdController .class)
-                        .getProductById(productDto.getId())
+                WebMvcLinkBuilder.methodOn(GetProductByNameController.class)
+                        .getProductByName(productDto.getName())
             ).withSelfRel()
         );
     }

@@ -47,8 +47,11 @@ public class UpdateProductController {
     }
 
     private static void configureHateaos(ProductDto updatedDto) {
-        BasicHateaosSetupLinks.setupGetAll(updatedDto);
+//        BasicHateaosSetupLinks.setupGetAll(updatedDto);
         BasicHateaosSetupLinks.setupGetById(updatedDto);
+        BasicHateaosSetupLinks.setupGetByName(updatedDto);
+        BasicHateaosSetupLinks.setupGetByDescription(updatedDto);
+        BasicHateaosSetupLinks.setupGetByStatus(updatedDto);
         BasicHateaosSetupLinks.setupCreate(updatedDto);
         BasicHateaosSetupLinks.setupDelete(updatedDto);
 

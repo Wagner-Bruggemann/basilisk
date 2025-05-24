@@ -53,7 +53,10 @@ public class DeleteProductByIdController {
     }
 
     private static void configureHateaos(ProductDto deletedDto) {
-        BasicHateaosSetupLinks.setupGetAll(deletedDto);
+//        BasicHateaosSetupLinks.setupGetAll(deletedDto);
+        BasicHateaosSetupLinks.setupGetByName(deletedDto);
+        BasicHateaosSetupLinks.setupGetByDescription(deletedDto);
+        BasicHateaosSetupLinks.setupGetByStatus(deletedDto);
         BasicHateaosSetupLinks.setupCreate(deletedDto);
 
         deletedDto.add(WebMvcLinkBuilder.linkTo(

@@ -2,16 +2,17 @@ package com.namgrengaw.basilisk.application.product.adapters.input.hateaos;
 
 import com.namgrengaw.basilisk.application.product.adapters.input.controller.*;
 import com.namgrengaw.basilisk.application.product.adapters.input.dto.ProductDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 public class BasicHateaosSetupLinks {
 
-    public static void setupGetAll(ProductDto productDto) {
+    public static void setupGetAll(ProductDto productDto, Pageable pageable) {
         productDto.add(
                 WebMvcLinkBuilder.linkTo(
                         WebMvcLinkBuilder
                                 .methodOn(FindAllProductControlller .class)
-                                .findAllProduct()
+                                .findAllProduct(pageable)
                 ).withRel("all-products")
         );
     }
@@ -23,6 +24,34 @@ public class BasicHateaosSetupLinks {
                                 .methodOn(GetProductByIdController .class)
                                 .getProductById(productDto.getId())
                 ).withRel("get-by-id")
+        );
+    }
+
+    public static void setupGetByName(ProductDto productDto) {
+        productDto.add(
+                WebMvcLinkBuilder.linkTo(
+                        WebMvcLinkBuilder
+                                .methodOn(GetProductByNameController .class)
+                                .getProductByName(productDto.getName())
+                ).withRel("get-by-name")
+        );
+    }
+
+    public static void setupGetByDescription(ProductDto productDto) {
+        productDto.add(
+                WebMvcLinkBuilder.linkTo(
+                        WebMvcLinkBuilder
+                                .methodOn(GetProductsByDescriptionController.class)
+                                .getProductByDescription(productDto.getName())
+                ).withRel("get-by-description")
+        );
+    }
+
+    public static void setupGetByStatus(ProductDto productDto) {
+        productDto.add(WebMvcLinkBuilder.linkTo(
+                        WebMvcLinkBuilder.methodOn(GetProductsByStatusController.class)
+                                .getProductByStatus(productDto.getStatus())
+                ).withRel("get-by-status")
         );
     }
 
