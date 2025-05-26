@@ -2,17 +2,20 @@ package com.namgrengaw.basilisk.application.product.adapters.input.hateaos;
 
 import com.namgrengaw.basilisk.application.product.adapters.input.controller.*;
 import com.namgrengaw.basilisk.application.product.adapters.input.dto.ProductDto;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 public class BasicHateaosSetupLinks {
 
-    public static void setupGetAll(ProductDto productDto, Pageable pageable) {
+    public static final PageRequest DEFAULT_PAGE_REQUEST = PageRequest.of(0, 10, Sort.unsorted());
+
+    public static void setupGetAll(ProductDto productDto) {
         productDto.add(
                 WebMvcLinkBuilder.linkTo(
                         WebMvcLinkBuilder
                                 .methodOn(FindAllProductControlller .class)
-                                .findAllProduct(pageable)
+                                .findAllProduct(DEFAULT_PAGE_REQUEST)
                 ).withRel("all-products")
         );
     }
@@ -32,7 +35,7 @@ public class BasicHateaosSetupLinks {
                 WebMvcLinkBuilder.linkTo(
                         WebMvcLinkBuilder
                                 .methodOn(GetProductByNameController .class)
-                                .getProductByName(productDto.getName())
+                                .getProductByName(productDto.getName(), DEFAULT_PAGE_REQUEST)
                 ).withRel("get-by-name")
         );
     }
@@ -42,7 +45,7 @@ public class BasicHateaosSetupLinks {
                 WebMvcLinkBuilder.linkTo(
                         WebMvcLinkBuilder
                                 .methodOn(GetProductsByDescriptionController.class)
-                                .getProductByDescription(productDto.getName())
+                                .getProductByDescription(productDto.getName(), DEFAULT_PAGE_REQUEST)
                 ).withRel("get-by-description")
         );
     }
@@ -50,7 +53,7 @@ public class BasicHateaosSetupLinks {
     public static void setupGetByStatus(ProductDto productDto) {
         productDto.add(WebMvcLinkBuilder.linkTo(
                         WebMvcLinkBuilder.methodOn(GetProductsByStatusController.class)
-                                .getProductByStatus(productDto.getStatus())
+                                .getProductByStatus(productDto.getStatus(), DEFAULT_PAGE_REQUEST)
                 ).withRel("get-by-status")
         );
     }

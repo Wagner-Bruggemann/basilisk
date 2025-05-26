@@ -1,15 +1,24 @@
 package com.namgrengaw.basilisk.application.product.adapters.input.controller;
 
 import com.namgrengaw.basilisk.application.infrastructure.components.Name;
+import com.namgrengaw.basilisk.application.infrastructure.components.pagination.PaginatedResponse;
+import com.namgrengaw.basilisk.application.infrastructure.components.pagination.PaginationRequest;
 import com.namgrengaw.basilisk.application.infrastructure.mappers.DtoMapper;
+import com.namgrengaw.basilisk.application.infrastructure.util.pagination.PaginationUtils;
 import com.namgrengaw.basilisk.application.product.adapters.input.dto.ProductDto;
 import com.namgrengaw.basilisk.application.product.adapters.input.hateaos.BasicHateaosSetupLinks;
 import com.namgrengaw.basilisk.application.product.core.domain.Product;
-import com.namgrengaw.basilisk.application.product.core.ports.input.GetProductByIdInputGateway;
 import com.namgrengaw.basilisk.application.product.core.ports.input.GetProductsByNameInputGateway;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,34 +51,76 @@ public class GetProductByNameController {
             responses = {
                 @ApiResponse(responseCode = "200", description = "Products found"),
                 @ApiResponse(responseCode = "404", description = "Products not found")
+            },
+            parameters = {
+                    @Parameter(
+                            in = ParameterIn.QUERY,
+                            name = "page",
+                            description = "Page number (0-based)",
+                            schema = @Schema(type = "integer", minimum = "0", defaultValue = "0", example = "0")
+                    ),
+                    @Parameter(
+                            in = ParameterIn.QUERY,
+                            name = "size",
+                            description = "Number of records per page",
+                            schema = @Schema(type = "integer", minimum = "1", maximum = "100", defaultValue = "10", example = "10")
+                    ),
+                    @Parameter(
+                            in = ParameterIn.QUERY,
+                            name = "sort",
+                            description = "Sort criteria in the format: property,(asc|desc). E.g., name,desc",
+                            schema = @Schema(type = "string", defaultValue = "name,asc", example = "name,desc")
+                    )
             }
     )
-    public ResponseEntity<List<ProductDto>> getProductByName(@PathVariable final String name) {
+    public ResponseEntity<PaginatedResponse<ProductDto>> getProductByName(
+            @PathVariable final String name,
+            @PageableDefault(page = 0, size = 10, sort = "name", direction = Sort.Direction.ASC)
+            @Parameter(hidden = true)
+            Pageable pageable
+    ) {
         final Name productName = new Name(name);
-        final List<Product> foundProducts = getProductsByNameInputGateway.getProductsByName(productName);
-        final List<ProductDto> foundDtos = foundProducts.stream()
+        final PaginationRequest paginationRequest = PaginationUtils.mapToPaginationRequest(pageable);
+        final PaginatedResponse<Product> paginatedResponse = getProductsByNameInputGateway.getProductsByName(productName, paginationRequest);
+        final List<ProductDto> foundDtos = paginatedResponse.content().stream()
                 .map(productMapper::toDto)
                 .toList();
 
-        foundDtos.forEach(GetProductByNameController::configureHateaos);
+        configureHateaos(foundDtos, pageable, paginatedResponse, name);
+        final PaginatedResponse<ProductDto> responseDto =
+                PaginationUtils.mapToPaginatedResponse(foundDtos, paginatedResponse);
 
-        return ResponseEntity.ok(foundDtos);
+        return ResponseEntity.ok(responseDto);
     }
 
-    private static void configureHateaos(ProductDto productDto) {
-//        BasicHateaosSetupLinks.setupGetAll(productDto);
-        BasicHateaosSetupLinks.setupGetById(productDto);
-        BasicHateaosSetupLinks.setupGetByDescription(productDto);
-        BasicHateaosSetupLinks.setupGetByStatus(productDto);
-        BasicHateaosSetupLinks.setupCreate(productDto);
-        BasicHateaosSetupLinks.setupUpdate(productDto);
-        BasicHateaosSetupLinks.setupDelete(productDto);
+    private static void configureHateaos(List<ProductDto> foundDtos, Pageable pageable, PaginatedResponse<Product> paginatedResponse, String name) {
+        foundDtos.forEach(dto -> {
+            BasicHateaosSetupLinks.setupGetAll(dto);
+            BasicHateaosSetupLinks.setupGetById(dto);
+            BasicHateaosSetupLinks.setupGetByDescription(dto);
+            BasicHateaosSetupLinks.setupGetByStatus(dto);
+            BasicHateaosSetupLinks.setupCreate(dto);
+            BasicHateaosSetupLinks.setupUpdate(dto);
+            BasicHateaosSetupLinks.setupDelete(dto);
 
-        productDto.add(WebMvcLinkBuilder.linkTo(
-                WebMvcLinkBuilder.methodOn(GetProductByNameController.class)
-                        .getProductByName(productDto.getName())
-            ).withSelfRel()
-        );
+            dto.add(WebMvcLinkBuilder.linkTo(
+                            WebMvcLinkBuilder.methodOn(GetProductByNameController.class)
+                                    .getProductByName(name, pageable)
+                    ).withSelfRel()
+            );
+        });
+
+        if (!foundDtos.isEmpty()) {
+            List<Link> paginationLinks = PaginationUtils.createPaginationHateaosLinks(
+                    pageable,
+                    paginatedResponse,
+                    page -> WebMvcLinkBuilder.linkTo(
+                            WebMvcLinkBuilder.methodOn(GetProductByNameController.class)
+                                    .getProductByName(name, pageable)
+                    ));
+            foundDtos.getFirst().add(paginationLinks);
+        }
+
     }
 
 }

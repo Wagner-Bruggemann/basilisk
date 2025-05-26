@@ -10,7 +10,6 @@ import com.namgrengaw.basilisk.application.product.core.domain.Product;
 import com.namgrengaw.basilisk.application.product.core.ports.input.FindAllProductsInputGateway;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -45,13 +44,13 @@ public class FindAllProductControlller {
 
     @GetMapping
     @Operation(
-            summary = "Get all products",
-            description = "Find all product available",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Found at least one product"),
-                    @ApiResponse(responseCode = "404", description = "Doesn't found any products")
-            },
-            parameters = {
+        summary = "Get all products",
+        description = "Find all product available",
+        responses = {
+                @ApiResponse(responseCode = "200", description = "Found at least one product"),
+                @ApiResponse(responseCode = "404", description = "Doesn't found any products")
+        },
+        parameters = {
             @Parameter(
                     in = ParameterIn.QUERY,
                     name = "page",
@@ -70,7 +69,7 @@ public class FindAllProductControlller {
                     description = "Sort criteria in the format: property,(asc|desc). E.g., name,desc",
                     schema = @Schema(type = "string", defaultValue = "name,asc", example = "name,desc")
             )
-    }
+        }
     )
     public ResponseEntity<PaginatedResponse<ProductDto>> findAllProduct(
             @PageableDefault(page = 0, size = 10, sort = "name", direction = Sort.Direction.ASC)
@@ -85,7 +84,7 @@ public class FindAllProductControlller {
 
         configureHateaos(foundDtos, pageable, paginatedResponse);
 
-        PaginatedResponse<ProductDto> responseDto =
+        final PaginatedResponse<ProductDto> responseDto =
                 PaginationUtils.mapToPaginatedResponse(foundDtos, paginatedResponse);
 
         return ResponseEntity.ok(responseDto);
